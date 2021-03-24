@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
 using System.IO.Compression;
 
@@ -497,7 +496,7 @@ namespace Nifti.NET
         private static Color ReadRGB(Stream stream, bool reverseBytes)
         {
             byte[] rgb = ReadBytes(stream, 3);
-            return Color.FromArgb(rgb[0], rgb[1], rgb[2]);
+            return Color.FromRgb(rgb[0], rgb[1], rgb[2]);
         }
 
         private static Color ReadRGBA(Stream stream, bool reverseBytes)
@@ -526,7 +525,7 @@ namespace Nifti.NET
             // Handle 32bit RGBA data
             if (nifti.Header.datatype == NiftiHeader.DT_RGBA32)
             {
-                var bytedata = new byte[nifti.Data.Length * 4];
+                var bytedata = new byte[(int) (nifti.Data.Length * 4)];
                 for (int i = 0; i < bytedata.Length; i += 4)
                 {
                     // Convert RGB to uint
@@ -548,7 +547,7 @@ namespace Nifti.NET
                 nifti.Header.datatype = NiftiHeader.DT_RGB;
                 nifti.Header.intent_code = NiftiHeader.NIFTI_INTENT_RGB_VECTOR;
 
-                var bytedata = new byte[nifti.Data.Length * 3];
+                var bytedata = new byte[(int) (nifti.Data.Length * 3)];
                 for (int i = 0; i < bytedata.Length; i += 3)
                 {
                     // Convert RGB to uint
