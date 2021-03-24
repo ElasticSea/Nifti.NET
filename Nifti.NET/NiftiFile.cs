@@ -19,7 +19,7 @@ namespace Nifti.NET
 
             using (var stream = ReadStream(path))
             {
-                var hdr = ReadHeader(stream);
+                var hdr = ReadHeaderFromStream(stream);
                 result.Header = hdr;
                 if (FileType.NII == TypeOf(hdr))
                 {
@@ -53,7 +53,7 @@ namespace Nifti.NET
         {
             using (var stream = ReadStream(path))
             {
-                var hdr = ReadHeader(stream);
+                var hdr = ReadHeaderFromStream(stream);
                 return hdr;
             }
         }
@@ -227,7 +227,7 @@ namespace Nifti.NET
             return new byte[bytelen];
         }
 
-        private static NiftiHeader ReadHeader(Stream stream)
+        public static NiftiHeader ReadHeaderFromStream(Stream stream)
         {
             bool reverseBytes = false;
 
